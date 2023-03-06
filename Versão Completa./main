@@ -1,0 +1,53 @@
+import PySimpleGUI as sg
+import random
+import pandas as pd
+
+veteranos_df = pd.read_csv("veteranos.csv")
+
+Lista_veteranos = list(veteranos_df.to_dict().keys())
+
+random.shuffle(Lista_veteranos)
+
+def lista_aleatoria(lista):
+    random.shuffle(lista)
+    grupo_1 = Lista_veteranos[0:4]
+    grupo_2 = Lista_veteranos[4:8]
+    grupo_3 = Lista_veteranos[8:12]
+    grupo_4 = Lista_veteranos[12:16]
+    return [grupo_1, grupo_2, grupo_3, grupo_4]
+
+
+class Janela:
+    @staticmethod
+    def func_janela():
+
+        listadelistas = lista_aleatoria(Lista_veteranos)
+
+        sg.theme('DarkAmber')
+
+        layout = [
+            [sg.Text("Tabela dos grupos")],
+            [sg.Table(headings=['Grupo 1', 'Grupo 2', 'Grupo 3', 'Grupo 4'], justification="Center", values=listadelistas)],
+            [sg.Button('Shuffle', key='-SHUFFLE-')]
+
+        ]
+
+        return sg.Window('Calculadora', layout, finalize=True)
+
+
+
+janela1 = Janela.func_janela()
+
+
+while True:
+
+    janela, eventos, valores = sg.read_all_windows()
+    if eventos == sg.WIN_CLOSED:
+        if janela != janela1:
+            janela.close()
+        elif janela == janela1:
+            break
+
+    if eventos == '-SHUFFLE-':
+        janela.close()
+        janela = Janela.func_janela()
