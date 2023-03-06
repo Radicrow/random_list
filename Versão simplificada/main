@@ -1,0 +1,24 @@
+import random
+import pandas as pd
+
+veteranos_df = pd.read_csv("veteranos.csv")
+
+list_2 = list(veteranos_df.to_dict().keys())
+
+random.shuffle(list_2)
+
+print(f"A lista possui {len(list_2)} integrantes")
+
+def lista_aleatoria():
+    grupo_1 = list_2[0:4]
+    grupo_2 = list_2[4:8]
+    grupo_3 = list_2[8:12]
+    grupo_4 = list_2[12:16]
+    print("Grupo 1:" + str(grupo_1))
+    print("Grupo 2:" + str(grupo_2))
+    print("Grupo 3:" + str(grupo_3))
+    print("Grupo 4:" + str(grupo_4))
+
+lista_aleatoria()
+
+
